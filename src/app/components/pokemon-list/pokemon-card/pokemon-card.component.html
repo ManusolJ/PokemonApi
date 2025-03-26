@@ -14,13 +14,21 @@
   </h3>
 
   <div class="flex flex-wrap justify-center gap-2">
-    @for(type of pokemon().types; track $index) {
+    @for(type of pokemon().types; track $index) { @if(type !== ''){
+    <!-- ? Tiene que haber una mejor manera de poner el color de forma dinamica... -->
     <input
       type="text"
       readonly
       [value]="type"
-      class="bg-gray-100 text-gray-700 w-full text-sm px-2 py-1 rounded-md border border-gray-300 cursor-default text-center"
+      [ngClass]="getColorForType(type!)"
+      class="text-white w-full text-sm px-2 py-1 rounded-md border border-gray-300 text-center pointer-events-none capitalize font-bold"
     />
-    }
+    }@else {
+    <input
+      type="text"
+      readonly
+      class="bg-gray-300 text-white w-full text-sm px-2 py-1 rounded-md border border-gray-300 cursor-default text-center pointer-events-none"
+    />
+    } }
   </div>
 </article>

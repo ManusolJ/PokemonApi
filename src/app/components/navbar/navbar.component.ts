@@ -8,6 +8,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {
+  // ? Revisar si esto esta correcto.
+
   scrollY = 0;
 
   ngOnInit() {

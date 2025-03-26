@@ -6,4 +6,6 @@ import { PokemonListComponent } from '../../components/pokemon-list/pokemon-list
   imports: [PokemonListComponent],
   templateUrl: './pokedex-page.component.html',
 })
-export default class PokedexPageComponent {}
+export default class PokedexPageComponent {
+  //TODO: Añadir seccion desplegabled de equipo en parte derecha de la pantalla.
+}
