@@ -13,10 +13,4 @@ export class PokemonMapper {
       image: pokemonApi.sprites.front_default,
     };
   }
-
-  static mapPokemonResponseApiToPokemonArray(
-    pokemonResponse: PokemonAPI[]
-  ): Pokemon[] {
-    return pokemonResponse.map(this.mapPokemonApiToPokemonItem);
-  }
 }

@@ -4,3 +4,7 @@ body {
   line-height: 1.6;
   font-family: "Open Sans", sans-serif;
 }
+
+:root {
+  --opacity-bg: rgba(31, 41, 55, 0.8);
+}

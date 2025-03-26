@@ -1,9 +1,24 @@
+import { NgClass } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'pkm-navbar',
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, NgClass],
   templateUrl: './navbar.component.html',
 })
-export class NavbarComponent {}
+export class NavbarComponent {
+  scrollY = 0;
+
+  ngOnInit() {
+    window.addEventListener('scroll', this.handleScroll, true);
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('scroll', this.handleScroll, true);
+  }
+
+  handleScroll = () => {
+    this.scrollY = window.scrollY;
+  };
+}

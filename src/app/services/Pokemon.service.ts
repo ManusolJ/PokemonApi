@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { Pokemon } from '../interfaces/pokemon';
 import { PokemonListApi } from '../interfaces/pokemon-list-api';
 import { environment } from '@envs/environment';
 import { PokemonAPI } from '../interfaces/pokemon-api';
@@ -10,17 +9,12 @@ import { PokemonMapper } from '../mapper/pokemon.mapper';
 @Injectable({
   providedIn: 'root',
 })
-export class PokeApiServiceService {
+export class PokemonService {
   private http = inject(HttpClient);
-
-  pokemonList = signal<Pokemon[]>([]);
-  pokemonListLoading = signal(true);
 
   constructor() {}
 
   getAllPokemon(offset: number = 0, limit: number = 20) {
-    this.pokemonListLoading.set(true);
-
     return this.http
       .get<PokemonListApi>(`${environment.pokemonUrl}/`, {
         params: { offset, limit },
@@ -34,11 +28,7 @@ export class PokeApiServiceService {
             )
           )
         ),
-        toArray(),
-        tap((pokemonList) => {
-          this.pokemonList.set(pokemonList);
-          this.pokemonListLoading.set(false);
-        })
+        toArray()
       );
   }
 
