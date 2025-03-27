@@ -5,4 +5,6 @@ import { Component } from '@angular/core';
   imports: [],
   templateUrl: './pokemon-pagination.component.html',
 })
-export class PokemonPaginationComponent { }
+export class PokemonPaginationComponent {
+  // TODO...
+}

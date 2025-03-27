@@ -69,6 +69,4 @@ export class PokemonListComponent {
   getOffsetFromPage(pageIndex: number): number {
     return (pageIndex - 1) * LIMIT_OF_POKEMON_BY_PAGE;
   }
-
-  //TODO: Paginacion
 }

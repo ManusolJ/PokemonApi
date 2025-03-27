@@ -11,7 +11,10 @@ import { PokemonCardComponent } from '@components/pokemon-list/pokemon-card/poke
 export class PokemonTeamComponent {
   pokemonTeam = signal<Pokemon[]>([]);
 
+  //TODO: Recibir pokemon y guardarlo en lista interna / almacenamiento local.
+  // ? Usar servicio?
   addPokemonToTeam() {}
 
+  //TODO: Mostrar o esconder contenedor
   showTeam(show: boolean) {}
 }

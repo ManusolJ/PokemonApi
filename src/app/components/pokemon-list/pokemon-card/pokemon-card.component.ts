@@ -11,6 +11,7 @@ export class PokemonCardComponent {
   pokemon = input.required<Pokemon>();
 
   //Lista de tipo: color para conseguir un color dinamico segun el tipo del pokemon.
+  // ? Es Limpio y optimo????
   colorTypes: Record<string, string> = {
     grass: 'bg-green-500',
     fire: 'bg-red-500',
