@@ -5,6 +5,8 @@ import { PokemonService } from 'src/app/services/Pokemon.service';
 import { PokemonCardComponent } from './pokemon-card/pokemon-card.component';
 import { PokemonSearchComponent } from './pokemon-search/pokemon-search.component';
 import { LoadingAnimationComponent } from '@components/loading-animation/loading-animation.component';
+import { TeamDropdownComponent } from '../pokemon-team/team-dropdown/team-dropdown.component';
+import { PokemonTeamComponent } from '../pokemon-team/pokemon-team.component';
 
 const LIMIT_OF_POKEMON_BY_PAGE = 20;
 
@@ -14,6 +16,7 @@ const LIMIT_OF_POKEMON_BY_PAGE = 20;
     PokemonCardComponent,
     PokemonSearchComponent,
     LoadingAnimationComponent,
+    PokemonTeamComponent,
   ],
   templateUrl: './pokemon-list.component.html',
 })

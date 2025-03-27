@@ -1,6 +1,8 @@
-<pkm-navbar />
-<div
-  class="w-11/12 md:w-8/12 mx-auto bg-stone-200 px-3 mt-[100px] mb-5 transition-all duration-300"
->
-  <router-outlet />
+<div class="h-screen overflow-y-scroll" #groupDiv (scroll)="onScroll()">
+  <pkm-navbar [isAwayFromTop]="IsScrolledFromTop()" />
+  <div
+    class="w-11/12 md:w-8/12 mx-auto mt-[110px] mb-5 transition-all duration-300"
+  >
+    <router-outlet />
+  </div>
 </div>

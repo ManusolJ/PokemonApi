@@ -1,0 +1,12 @@
+<div class="fixed top-16 left-1/2 -translate-x-1/2 z-40">
+  <button
+    class="bg-gray-800 text-white text-sm px-4 py-1 rounded-b-xl shadow-md flex flex-col items-center hover:bg-gray-700 transition cursor-pointer"
+    (click)="displayPokemonTeam()"
+  >
+    <span>Equipo</span>
+    <i
+      class="fa-solid fa-chevron-down transition-transform duration-300"
+      [ngClass]="{ 'rotate-180': isDisplayed() }"
+    ></i>
+  </button>
+</div>

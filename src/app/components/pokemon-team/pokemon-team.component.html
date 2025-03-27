@@ -1,0 +1,10 @@
+<section>
+  <div>
+    @for(pokemon of pokemonTeam(); track $index){
+
+    <!-- <pkm-pokemon-card /> -->
+
+    }
+  </div>
+  <pkm-team-dropdown (displayDropdown)="showTeam($event)" />
+</section>

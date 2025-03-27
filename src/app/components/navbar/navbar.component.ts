@@ -1,5 +1,11 @@
 import { NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  input,
+  viewChild,
+  ViewChild,
+} from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -8,21 +14,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {
-  // ? Revisar si esto esta correcto.
+  isAwayFromTop = input<boolean>(false);
 
-  scrollY = 0;
-
-  ngOnInit() {
-    window.addEventListener('scroll', this.handleScroll, true);
-  }
-
-  ngOnDestroy() {
-    window.removeEventListener('scroll', this.handleScroll, true);
-  }
-
-  handleScroll = () => {
-    this.scrollY = window.scrollY;
-  };
-
+  //TODO...
   toggleTeamDropdown() {}
 }

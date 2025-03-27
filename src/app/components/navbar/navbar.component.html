@@ -1,8 +1,8 @@
 <nav
   class="w-full h-16 flex items-center justify-center shadow-md fixed top-0 inset-x-0 z-50 backdrop-filter transition-all"
   [ngClass]="{
-    'backdrop-blur-[2px] bg-(--opacity-bg)': scrollY > 0,
-    'bg-gray-800': scrollY === 0
+    'backdrop-blur-[2px] bg-(--opacity-bg)': isAwayFromTop(),
+    'bg-gray-800': !isAwayFromTop()
   }"
 >
   <div class="max-w-6xl w-full px-4 flex justify-between gap-4 relative">
