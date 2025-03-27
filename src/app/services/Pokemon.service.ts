@@ -32,7 +32,20 @@ export class PokemonService {
       );
   }
 
+  getPokemonByName(name: string, offset: number = 0, limit: number = 20) {
+    return this.http.get<PokemonAPI>(`${environment.pokemonUrl}/${name}`).pipe(
+      map((pokemonApi) => PokemonMapper.mapPokemonApiToPokemonItem(pokemonApi)),
+      toArray()
+    );
+  }
+
   getPokemonByUrl(url: string) {
     return this.http.get<PokemonAPI>(url);
+  }
+
+  getPokemonCount() {
+    return this.http
+      .get<PokemonListApi>(`${environment.pokemonUrl}`)
+      .pipe(tap((res) => res.count));
   }
 }

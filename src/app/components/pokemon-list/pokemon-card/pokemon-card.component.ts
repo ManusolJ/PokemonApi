@@ -10,7 +10,7 @@ import { Pokemon } from 'src/app/interfaces/pokemon';
 export class PokemonCardComponent {
   pokemon = input.required<Pokemon>();
 
-  // ? Revisar si esto esta bien.
+  //Lista de tipo: color para conseguir un color dinamico segun el tipo del pokemon.
   colorTypes: Record<string, string> = {
     grass: 'bg-green-500',
     fire: 'bg-red-500',
@@ -32,11 +32,11 @@ export class PokemonCardComponent {
     fighting: 'bg-orange-600',
   };
 
-  // ! TS me esta dando duro
-  // ? Codigo pocho???
+  //Funcion para conseguir el el color.
   getColorForType(type: string): string {
     return this.colorTypes[type] ?? 'bg-gray-300';
   }
 
-  // TODO: Añadir boton y funcuion de añadir pokemon al equipo.
+  //TODO...
+  sendPokemonToTeam() {}
 }

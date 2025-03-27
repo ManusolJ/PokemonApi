@@ -3,35 +3,58 @@ import { Subscription } from 'rxjs';
 import { Pokemon } from 'src/app/interfaces/pokemon';
 import { PokemonService } from 'src/app/services/Pokemon.service';
 import { PokemonCardComponent } from './pokemon-card/pokemon-card.component';
+import { PokemonSearchComponent } from './pokemon-search/pokemon-search.component';
+import { LoadingAnimationComponent } from '@components/loading-animation/loading-animation.component';
 
 const LIMIT_OF_POKEMON_BY_PAGE = 20;
 
 @Component({
   selector: 'pkm-pokemon-list',
-  imports: [PokemonCardComponent],
+  imports: [
+    PokemonCardComponent,
+    PokemonSearchComponent,
+    LoadingAnimationComponent,
+  ],
   templateUrl: './pokemon-list.component.html',
 })
 export class PokemonListComponent {
-  pokemonService = inject(PokemonService);
-  private subscrption = new Subscription();
+  public pokemonService = inject(PokemonService);
+  private subscriptions = new Subscription();
 
   currentPage = signal(1);
 
   pokemonList = signal<Pokemon[]>([]);
 
-  ngOnInit() {
-    const offset = this.getOffsetFromPage(this.currentPage());
+  loadingPokemonList = signal<boolean>(true);
 
-    this.pokemonService
-      .getAllPokemon(offset, LIMIT_OF_POKEMON_BY_PAGE)
-      .subscribe((pokemonList) => {
-        const sortedList = pokemonList.sort((a, b) => a.id - b.id);
-        this.pokemonList.set(sortedList);
-      });
+  offset = this.getOffsetFromPage(this.currentPage());
+
+  ngOnInit() {
+    this.subscriptions.add(
+      this.pokemonService
+        .getAllPokemon(this.offset, LIMIT_OF_POKEMON_BY_PAGE)
+        .subscribe((pokemonList) => {
+          const sortedList = pokemonList.sort((a, b) => a.id - b.id);
+          this.pokemonList.set(sortedList);
+          this.loadingPokemonList.set(false);
+        })
+    );
   }
 
   ngOnDestroy() {
-    this.subscrption.unsubscribe();
+    this.subscriptions.unsubscribe();
+  }
+
+  getPokemonByName(pokemonName: string) {
+    this.loadingPokemonList.set(true);
+    this.subscriptions.add(
+      this.pokemonService
+        .getPokemonByName(pokemonName, this.offset, LIMIT_OF_POKEMON_BY_PAGE)
+        .subscribe((pokemon) => {
+          this.pokemonList.set(pokemon);
+          this.loadingPokemonList.set(false);
+        })
+    );
   }
 
   // ? Revisar si esto correcto cuando paginacion este finalizado.

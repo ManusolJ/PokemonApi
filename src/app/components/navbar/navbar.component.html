@@ -5,21 +5,20 @@
     'bg-gray-800': scrollY === 0
   }"
 >
-  <div class="max-w-6xl w-full px-4 flex justify-between gap-4">
+  <div class="max-w-6xl w-full px-4 flex justify-between gap-4 relative">
     <a
-      [routerLink]="'/equipo'"
-      routerLinkActive="bg-red-600"
-      class="flex-1 text-center text-white font-semibold py-2 rounded-md bg-red-500 hover:bg-red-400 transition-colors border-2 border-black flex items-center justify-center"
-    >
-      Equipo Pokémon
-    </a>
-
-    <a
-      [routerLink]="'/pokedex'"
-      routerLinkActive="bg-red-600"
+      [routerLink]="'/dashboard/pokedex'"
+      routerLinkActive="bg-red-700"
       class="flex-1 text-center text-white font-semibold py-2 rounded-md bg-red-500 hover:bg-red-400 transition-colors border-2 border-black flex items-center justify-center"
     >
       Pokédex
+    </a>
+    <a
+      [routerLink]="'/dashboard/team'"
+      routerLinkActive="bg-red-700"
+      class="flex-1 text-center text-white font-semibold py-2 rounded-md bg-red-500 hover:bg-red-400 transition-colors border-2 border-black flex items-center justify-center"
+    >
+      Equipo Pokémon
     </a>
   </div>
 </nav>
