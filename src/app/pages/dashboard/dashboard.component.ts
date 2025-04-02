@@ -1,7 +1,7 @@
 import { Component, signal } from '@angular/core';
-import { NavbarComponent } from '../../shared/navbar/navbar.component';
-import { PokemonTeamComponent } from '../../components/pokemon-team/pokemon-team.component';
-import { PokedexPageComponent } from '../pokedex-page/pokedex-page.component';
+import { NavbarComponent } from '@sharedComp/navbar/navbar.component';
+import { PokemonTeamComponent } from '@components/pokemon-team/pokemon-team.component';
+import { PokedexPageComponent } from '@pages/pokedex-page/pokedex-page.component';
 import { Pokemon } from '@interfaces/pokemon.interface';
 
 @Component({

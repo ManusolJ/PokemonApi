@@ -1,4 +1,4 @@
-import { Component, effect, input, output } from '@angular/core';
+import { Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-pokemon-search',

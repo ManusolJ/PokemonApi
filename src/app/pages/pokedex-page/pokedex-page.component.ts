@@ -7,6 +7,7 @@ import {
   signal,
 } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
+
 import { PokemonService } from '@services/pokemon.service';
 import { PokemonListComponent } from '@components/pokemon-list/pokemon-list.component';
 import { PokemonSearchComponent } from '@components/pokemon-search/pokemon-search.component';

@@ -10,7 +10,6 @@ import {
   throwError,
   concatMap,
   filter,
-  take,
   of,
   tap,
 } from 'rxjs';
@@ -27,7 +26,6 @@ import { PokemonCache } from '@interfaces/pokemonCache.interface';
 })
 export class PokemonService {
   private http = inject(HttpClient);
-
   private pokemonCache = new Map<string, PokemonCache>();
 
   pokemonCount = signal<number>(0);
@@ -57,7 +55,7 @@ export class PokemonService {
         ),
         catchError((error) => {
           return throwError(
-            () => new Error('No se pudo obtener la lista de pokemon.')
+            () => new Error('No se pudo obtener la lista de pokemon.', error)
           );
         })
       );
@@ -101,22 +99,30 @@ export class PokemonService {
             count: this.pokemonCount(),
           })
         ),
-        catchError(() => {
+        catchError((error) => {
           return throwError(
-            () => new Error('No se pudo obtener el resultado de la búsqueda.')
+            () =>
+              new Error(
+                'No se pudo obtener el resultado de la búsqueda.',
+                error
+              )
           );
         })
       );
   }
 
   getPokemonByUrl(url: string): Observable<Pokemon> {
-    return this.http
-      .get<PokemonREST>(url)
-      .pipe(
-        map((PokemonREST) =>
-          PokemonMapper.mapPokemonApiToPokemonItem(PokemonREST)
-        )
-      );
+    return this.http.get<PokemonREST>(url).pipe(
+      map((PokemonREST) =>
+        PokemonMapper.mapPokemonApiToPokemonItem(PokemonREST)
+      ),
+      catchError((error) => {
+        return throwError(
+          () =>
+            new Error('No se pudo obtener el resultado de la búsqueda.', error)
+        );
+      })
+    );
   }
 
   getPokemonCount(): Observable<number> {
@@ -125,14 +131,12 @@ export class PokemonService {
       .pipe(map((pokemonREST) => pokemonREST.count));
   }
 
-  saveTeamToLocalStorage(team: (Pokemon | undefined)[]) {
+  saveTeamToLocalStorage(team: (Pokemon | undefined)[]): void {
     localStorage.setItem('team', JSON.stringify(team));
   }
 
   getTeamFromLocalStorage(): (Pokemon | undefined)[] | null {
     const team = localStorage.getItem('team');
-    console.log(team);
-
     if (!team) return null;
     return (JSON.parse(team) as (Pokemon | null)[]).map((p) => p ?? undefined);
   }

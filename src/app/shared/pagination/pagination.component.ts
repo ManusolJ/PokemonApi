@@ -16,11 +16,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 export class PaginationComponent {
   router = inject(Router);
   route = inject(ActivatedRoute);
-  pages = input(0);
-  onSearch = input(false);
+  pages = input<number>(0);
+  onSearch = input<boolean>(false);
   currentPage = input<number>(1);
   activePage = linkedSignal(() => this.currentPage());
 
+  // ? Codigo bastante feote...
   getPagesList = computed(() => {
     const total = this.pages();
     const current = this.activePage();

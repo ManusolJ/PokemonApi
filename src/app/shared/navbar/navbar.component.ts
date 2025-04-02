@@ -7,7 +7,6 @@ import { Component, output, signal } from '@angular/core';
 })
 export class NavbarComponent {
   activateTeamDropdown = output<boolean>();
-
   isTeamDroppedDown = signal(false);
 
   sendDropdownSignal() {

@@ -1,4 +1,5 @@
 import { Component, effect, inject, input, model, signal } from '@angular/core';
+
 import { Pokemon } from '@interfaces/pokemon.interface';
 import { PokemonService } from '@services/pokemon.service';
 
