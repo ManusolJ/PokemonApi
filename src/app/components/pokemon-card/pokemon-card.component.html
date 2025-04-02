@@ -17,7 +17,7 @@
       @for(type of pokemon().types; track $index){
       <span
         [ngClass]="type ? types[type] : 'hidden'"
-        class="badge badge-lg badge-outline px-4 py-2 text-sm capitalize"
+        class="badge badge-lg badge-outline px-4 py-2 text-sm capitalize text-white font-bold"
       >
         {{ type }}
       </span>

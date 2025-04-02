@@ -1,5 +1,12 @@
-<section class="grid grid-cols-3 gap-3">
+@if(isLoading()){
+
+<div class="flex grow w-full items-center justify-center">
+  <app-loading-animation />
+</div>
+}@else {
+<section class="grid grid-cols-3 gap-3 h-full">
   @for(mon of pokemon(); track mon.id){
   <app-pokemon-card [pokemon]="mon" />
   }
 </section>
+}

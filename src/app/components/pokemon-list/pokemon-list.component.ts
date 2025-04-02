@@ -1,10 +1,11 @@
 import { Component, input } from '@angular/core';
 import { PokemonCardComponent } from '@components/pokemon-card/pokemon-card.component';
 import { Pokemon } from '@interfaces/pokemon.interface';
+import { LoadingAnimationComponent } from '@sharedComp/loading-animation/loading-animation.component';
 
 @Component({
   selector: 'app-pokemon-list',
-  imports: [PokemonCardComponent],
+  imports: [PokemonCardComponent, LoadingAnimationComponent],
   templateUrl: './pokemon-list.component.html',
 })
 export class PokemonListComponent {

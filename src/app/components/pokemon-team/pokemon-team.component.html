@@ -1,0 +1,10 @@
+<section
+  class="absolute top-20 left-1/2 -translate-x-1/2 -translate-y-100 flex gap-3 z-50 transition-transform duration-200"
+  [class.translate-y-0]="this.teamActive()"
+>
+  @for(pokemon of pokemonTeam; track $index){
+  <div>
+    <p>Aqui iria pokemon {{ $index }}</p>
+  </div>
+  }
+</section>
