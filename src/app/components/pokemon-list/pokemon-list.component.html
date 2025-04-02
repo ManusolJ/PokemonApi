@@ -1,27 +1,5 @@
-<section
-  class="flex flex-col items-center justify-center bg-gray-50 py-4"
-  #groupDiv
->
-  <pkm-pokemon-search
-    class="w-full mb-4"
-    (pokemonQuery)="getPokemonByName($event)"
-  />
-  @if(loadingPokemonList()){
-  <pkm-loading-animation />
-  }@else { @if(pokemonList().length > 1){
-  <div
-    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6"
-  >
-    @for(pokemon of pokemonList(); track pokemon.id) {
-    <pkm-pokemon-card [pokemon]="pokemon" />
-    } @empty {
-    <p>No hay pokemon disponibles.</p>
-    }
-  </div>
-  }@else {
-  <div class="w-full flex justify-center">
-    <pkm-pokemon-card [pokemon]="pokemonList()[0]" />
-  </div>
-  }}
-  <pkm-pokemon-team />
+<section class="grid grid-cols-3 gap-3">
+  @for(mon of pokemon(); track mon.id){
+  <app-pokemon-card [pokemon]="mon" />
+  }
 </section>

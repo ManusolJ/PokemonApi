@@ -1,0 +1,35 @@
+<div
+  class="card bg-base-100 w-80 sm:w-96 shadow-md hover:shadow-xl transition-shadow duration-300 rounded-2xl mx-auto"
+>
+  <figure class="bg-base-200 p-4">
+    <img
+      [src]="pokemon().image"
+      [alt]="pokemon().name"
+      class="w-32 h-32 object-contain"
+    />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title text-center text-lg sm:text-xl font-semibold">
+      {{ pokemon().name | titlecase }}
+    </h2>
+
+    <div class="flex flex-wrap justify-center gap-2 mt-2">
+      @for(type of pokemon().types; track $index){
+      <span
+        [ngClass]="type ? types[type] : 'hidden'"
+        class="badge badge-lg badge-outline px-4 py-2 text-sm capitalize"
+      >
+        {{ type }}
+      </span>
+      }
+    </div>
+
+    <div class="card-actions justify-center mt-4">
+      <button
+        class="btn btn-primary btn-sm sm:btn-md shadow-md hover:scale-105 transition-transform duration-200"
+      >
+        Añadir al equipo
+      </button>
+    </div>
+  </div>
+</div>

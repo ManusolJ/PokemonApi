@@ -1,10 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { PokemonListApi } from '../interfaces/pokemon-list-api';
+import {
+  from,
+  map,
+  mergeMap,
+  toArray,
+  Observable,
+  catchError,
+  throwError,
+  concatMap,
+  filter,
+  take,
+  of,
+  tap,
+} from 'rxjs';
+
 import { environment } from '@envs/environment';
-import { PokemonAPI } from '../interfaces/pokemon-api';
-import { from, map, mergeMap, tap, toArray } from 'rxjs';
-import { PokemonMapper } from '../mapper/pokemon.mapper';
+import { PokemonListREST } from '@interfaces/pokemon-list-REST.interface';
+import { PokemonREST } from '@interfaces/pokemon-REST';
+import { PokemonMapper } from '../mapper/PokemonMapper/PokemonMapper';
+import { Pokemon } from '@interfaces/pokemon.interface';
+import { PokemonCache } from '@interfaces/pokemonCache.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -12,40 +28,100 @@ import { PokemonMapper } from '../mapper/pokemon.mapper';
 export class PokemonService {
   private http = inject(HttpClient);
 
-  constructor() {}
+  private pokemonCache = new Map<string, PokemonCache>();
 
-  getAllPokemon(offset: number = 0, limit: number = 20) {
+  pokemonCount = signal<number>(0);
+
+  getAllPokemon(limit: number = 18, offset: number = 0): Observable<Pokemon[]> {
+    const key = `${limit}-${offset}`;
+    if (this.pokemonCache.has(key)) {
+      this.pokemonCount.set(this.pokemonCache.get(key)?.count!);
+      return of(this.pokemonCache.get(key)?.pokemon!);
+    }
     return this.http
-      .get<PokemonListApi>(`${environment.pokemonUrl}/`, {
+      .get<PokemonListREST>(`${environment.url}/`, {
         params: { offset, limit },
       })
       .pipe(
+        tap((res) => this.pokemonCount.set(res.count)),
         mergeMap((res) => from(res.results)),
-        mergeMap((pokemon) =>
-          this.getPokemonByUrl(pokemon.url).pipe(
-            map((pokemonApi) =>
-              PokemonMapper.mapPokemonApiToPokemonItem(pokemonApi)
-            )
-          )
+        concatMap((pokemonRESTListItem) =>
+          this.getPokemonByUrl(pokemonRESTListItem.url)
         ),
-        toArray()
+        toArray(),
+        tap((pokemonList) =>
+          this.pokemonCache.set(key, {
+            pokemon: pokemonList,
+            count: this.pokemonCount(),
+          })
+        ),
+        catchError((error) => {
+          return throwError(
+            () => new Error('No se pudo obtener la lista de pokemon.')
+          );
+        })
       );
   }
 
-  getPokemonByName(name: string, offset: number = 0, limit: number = 20) {
-    return this.http.get<PokemonAPI>(`${environment.pokemonUrl}/${name}`).pipe(
-      map((pokemonApi) => PokemonMapper.mapPokemonApiToPokemonItem(pokemonApi)),
-      toArray()
-    );
-  }
+  getPokemonByName(
+    limit: number = 2000,
+    offset: number = 0,
+    query: string
+  ): Observable<Pokemon[]> {
+    const key = `${limit}-${offset}-${query}`;
+    if (this.pokemonCache.has(key)) {
+      this.pokemonCount.set(this.pokemonCache.get(key)?.count!);
+      return of(this.pokemonCache.get(key)?.pokemon!);
+    }
 
-  getPokemonByUrl(url: string) {
-    return this.http.get<PokemonAPI>(url);
-  }
-
-  getPokemonCount() {
     return this.http
-      .get<PokemonListApi>(`${environment.pokemonUrl}`)
-      .pipe(tap((res) => res.count));
+      .get<PokemonListREST>(`${environment.url}`, {
+        params: { limit, offset },
+      })
+      .pipe(
+        mergeMap((res) =>
+          from(res.results).pipe(
+            filter((list) => list.name.includes(query)),
+            toArray(),
+            tap((allMatches) => this.pokemonCount.set(allMatches.length)),
+            map((allMatches) => allMatches.slice(0, 18))
+          )
+        ),
+        concatMap((filtered) =>
+          from(filtered).pipe(
+            concatMap((pokemonRESTListItem) =>
+              this.getPokemonByUrl(pokemonRESTListItem.url)
+            ),
+            toArray()
+          )
+        ),
+        tap((pokemonList) =>
+          this.pokemonCache.set(key, {
+            pokemon: pokemonList,
+            count: this.pokemonCount(),
+          })
+        ),
+        catchError(() => {
+          return throwError(
+            () => new Error('No se pudo obtener el resultado de la búsqueda.')
+          );
+        })
+      );
+  }
+
+  getPokemonByUrl(url: string): Observable<Pokemon> {
+    return this.http
+      .get<PokemonREST>(url)
+      .pipe(
+        map((PokemonREST) =>
+          PokemonMapper.mapPokemonApiToPokemonItem(PokemonREST)
+        )
+      );
+  }
+
+  getPokemonCount(): Observable<number> {
+    return this.http
+      .get<PokemonListREST>(environment.url)
+      .pipe(map((pokemonREST) => pokemonREST.count));
   }
 }

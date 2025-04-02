@@ -1,0 +1,17 @@
+<div class="join mt-5 absolute bottom-5 left-1/2 -translate-x-1/2">
+  @for (page of getPagesList(); track page) { @if (page === -1 || page === -2) {
+  <button class="join-item btn btn-disabled">...</button>
+  } @else {
+  <button
+    class="join-item btn"
+    [class.btn-primary]="page == activePage()"
+    [routerLink]="[]"
+    [queryParams]="{ page: page }"
+    (click)="activePage.set(page)"
+  >
+    {{ page }}
+  </button>
+  } } @empty {
+  <p>No hay páginas</p>
+  }
+</div>

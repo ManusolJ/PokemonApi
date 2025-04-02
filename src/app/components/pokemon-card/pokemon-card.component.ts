@@ -1,18 +1,16 @@
-import { NgClass } from '@angular/common';
+import { NgClass, TitleCasePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { Pokemon } from 'src/app/interfaces/pokemon';
+import { Pokemon } from '@interfaces/pokemon.interface';
 
 @Component({
-  selector: 'pkm-pokemon-card',
-  imports: [NgClass],
+  selector: 'app-pokemon-card',
+  imports: [TitleCasePipe, NgClass],
   templateUrl: './pokemon-card.component.html',
 })
 export class PokemonCardComponent {
   pokemon = input.required<Pokemon>();
 
-  //Lista de tipo: color para conseguir un color dinamico segun el tipo del pokemon.
-  // ? Es Limpio y optimo????
-  colorTypes: Record<string, string> = {
+  types: Record<string, string> = {
     grass: 'bg-green-500',
     fire: 'bg-red-500',
     water: 'bg-blue-500',
@@ -32,12 +30,4 @@ export class PokemonCardComponent {
     fairy: 'bg-pink-300',
     fighting: 'bg-orange-600',
   };
-
-  //Funcion para conseguir el el color.
-  getColorForType(type: string): string {
-    return this.colorTypes[type] ?? 'bg-gray-300';
-  }
-
-  //TODO...
-  sendPokemonToTeam() {}
 }

@@ -1,4 +1,4 @@
-export interface PokemonAPI {
+export interface PokemonREST {
   abilities: Ability[];
   base_experience: number;
   cries: Cries;

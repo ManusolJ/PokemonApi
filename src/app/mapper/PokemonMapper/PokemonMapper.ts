@@ -1,8 +1,8 @@
-import { Pokemon } from '../interfaces/pokemon';
-import { PokemonAPI } from '../interfaces/pokemon-api';
+import { PokemonREST } from '@interfaces/pokemon-REST';
+import { Pokemon } from '@interfaces/pokemon.interface';
 
 export class PokemonMapper {
-  static mapPokemonApiToPokemonItem(pokemonApi: PokemonAPI): Pokemon {
+  static mapPokemonApiToPokemonItem(pokemonApi: PokemonREST): Pokemon {
     return {
       id: pokemonApi.id,
       name: pokemonApi.name,

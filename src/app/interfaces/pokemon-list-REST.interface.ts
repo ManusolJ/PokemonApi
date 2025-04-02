@@ -1,4 +1,4 @@
-export interface PokemonListApi {
+export interface PokemonListREST {
   count: number;
   next: string;
   previous: null;
