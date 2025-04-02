@@ -124,4 +124,16 @@ export class PokemonService {
       .get<PokemonListREST>(environment.url)
       .pipe(map((pokemonREST) => pokemonREST.count));
   }
+
+  saveTeamToLocalStorage(team: (Pokemon | undefined)[]) {
+    localStorage.setItem('team', JSON.stringify(team));
+  }
+
+  getTeamFromLocalStorage(): (Pokemon | undefined)[] | null {
+    const team = localStorage.getItem('team');
+    console.log(team);
+
+    if (!team) return null;
+    return (JSON.parse(team) as (Pokemon | null)[]).map((p) => p ?? undefined);
+  }
 }

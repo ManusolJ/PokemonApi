@@ -39,7 +39,7 @@ export class PaginationComponent {
     return range;
   });
 
-  cringe2 = effect(() => {
+  setPageOnSearch = effect(() => {
     if (this.onSearch()) {
       this.activePage.set(1);
       this.router.navigate([], { queryParams: { page: 1 } });

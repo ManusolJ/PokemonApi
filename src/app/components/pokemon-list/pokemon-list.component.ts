@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { PokemonCardComponent } from '@components/pokemon-card/pokemon-card.component';
 import { Pokemon } from '@interfaces/pokemon.interface';
 import { LoadingAnimationComponent } from '@sharedComp/loading-animation/loading-animation.component';
@@ -13,4 +13,6 @@ export class PokemonListComponent {
   errorMessage = input<string | unknown | null>();
   isLoading = input<boolean>();
   isEmpty = input<boolean>(false);
+
+  sendPokemonToTeam = output<Pokemon>();
 }

@@ -8,6 +8,7 @@
     [errorMessage]="pokemonResource.error()"
     [isEmpty]="pokemonResource.value()?.length === 0"
     [isLoading]="pokemonResource.isLoading()"
+    (sendPokemonToTeam)="sendPokemonToTeam.emit($event)"
   />
   <app-pagination
     [pages]="this.totalPages()"

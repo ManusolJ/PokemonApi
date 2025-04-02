@@ -5,9 +5,7 @@ import { PokemonTeamComponent } from './components/pokemon-team/pokemon-team.com
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent, PokemonTeamComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
 })
-export class AppComponent {
-  activeDropdown = signal(false);
-}
+export class AppComponent {}

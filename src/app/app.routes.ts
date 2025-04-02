@@ -1,13 +1,13 @@
 import { Routes } from '@angular/router';
-import { PokedexPageComponent } from '@pages/pokedex-page/pokedex-page.component';
+import { DashboardComponent } from '@pages/dashboard/dashboard.component';
 
 export const routes: Routes = [
   {
-    path: 'pokedex',
-    component: PokedexPageComponent,
+    path: 'dashboard',
+    component: DashboardComponent,
   },
   {
     path: '**',
-    redirectTo: 'pokedex',
+    redirectTo: 'dashboard',
   },
 ];

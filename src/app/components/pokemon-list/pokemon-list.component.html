@@ -6,7 +6,10 @@
 }@else {
 <section class="grid grid-cols-3 gap-3 h-full">
   @for(mon of pokemon(); track mon.id){
-  <app-pokemon-card [pokemon]="mon" />
+  <app-pokemon-card
+    [pokemon]="mon"
+    (sendPokemonToTeam)="sendPokemonToTeam.emit($event)"
+  />
   }
 </section>
 }

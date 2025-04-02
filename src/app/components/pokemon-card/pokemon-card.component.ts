@@ -1,5 +1,5 @@
 import { NgClass, TitleCasePipe } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Pokemon } from '@interfaces/pokemon.interface';
 
 @Component({
@@ -30,4 +30,6 @@ export class PokemonCardComponent {
     fairy: 'bg-pink-300',
     fighting: 'bg-orange-600',
   };
+
+  sendPokemonToTeam = output<Pokemon>();
 }

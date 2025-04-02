@@ -1,10 +1,18 @@
-import { Component, effect, inject, linkedSignal, signal } from '@angular/core';
+import {
+  Component,
+  effect,
+  inject,
+  linkedSignal,
+  output,
+  signal,
+} from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { PokemonService } from '@services/pokemon.service';
 import { PokemonListComponent } from '@components/pokemon-list/pokemon-list.component';
 import { PokemonSearchComponent } from '@components/pokemon-search/pokemon-search.component';
 import { PaginationComponent } from '@sharedComp/pagination/pagination.component';
 import { PaginationService } from '@sharedComp/pagination/pagination.service';
+import { Pokemon } from '@interfaces/pokemon.interface';
 
 const LIMIT_PER_PAGE = 18;
 const UNLIMITED_POKEMON = 2000;
@@ -50,8 +58,10 @@ export class PokedexPageComponent {
     this.paginationReset.set(true);
   }
 
-  cringe = effect(() => {
+  setReset = effect(() => {
     const page = this.paginationService.currentPage();
     this.paginationReset.set(false);
   });
+
+  sendPokemonToTeam = output<Pokemon>();
 }
