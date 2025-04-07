@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core';
-import { PokemonCardComponent } from '@components/pokemon-card/pokemon-card.component';
+import { PokemonCardComponent } from '@components/pokemon-list/pokemon-card/pokemon-card.component';
 import { Pokemon } from '@interfaces/pokemon.interface';
 import { LoadingAnimationComponent } from '@sharedComp/loading-animation/loading-animation.component';
 
@@ -14,5 +14,5 @@ export class PokemonListComponent {
   isLoading = input<boolean>();
   isEmpty = input<boolean>(false);
 
-  sendPokemonToTeam = output<Pokemon>();
+  setPokemon = output<Pokemon>();
 }

@@ -1,3 +1,9 @@
-<app-navbar (activateTeamDropdown)="activeDropdown.set($event)" />
-<app-pokemon-team [teamActive]="activeDropdown()" [pokemonToAdd]="pokemon()" />
-<app-pokedex-page (sendPokemonToTeam)="addPokemonToTeam($event)" />
+<app-navbar
+  (activateTeamDropdown)="activeDropdown.set($event)"
+  [pokemonTeamCount]="pokemonTeamCount()"
+/>
+<app-pokemon-team
+  [teamActive]="activeDropdown()"
+  (teamCount)="setPokemonTeam($event)"
+/>
+<app-pokedex-page />

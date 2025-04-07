@@ -1,7 +1,7 @@
-<div class="mb-5 w-1/2 mx-auto">
-  <label class="input w-full pr-0 border-0">
+<div class="mb-5 mx-auto w-full max-w-4xl">
+  <label class="flex flex-col md:flex-row items-center gap-2 p-2 rounded-md">
     <svg
-      class="h-[1em] opacity-50"
+      class="h-5 w-5 opacity-50 hidden md:inline"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
     >
@@ -19,12 +19,16 @@
     <input
       type="search"
       required
-      placeholder="Buscar Pokemon"
+      placeholder="Buscar Pokémon"
       autofocus
+      class="input flex-grow focus:outline-none relative"
       (keyup.enter)="searchText.emit(txtSearch.value)"
       #txtSearch
     />
-    <button (click)="searchText.emit(txtSearch.value)" class="btn btn-primary">
+    <button
+      (click)="searchText.emit(txtSearch.value)"
+      class="btn btn-primary w-full max-w-3xs md:w-fit"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

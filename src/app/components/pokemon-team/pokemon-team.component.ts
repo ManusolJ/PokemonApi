@@ -1,46 +1,38 @@
-import { Component, effect, inject, input, model, signal } from '@angular/core';
-
-import { Pokemon } from '@interfaces/pokemon.interface';
+import {
+  Component,
+  effect,
+  inject,
+  linkedSignal,
+  model,
+  output,
+} from '@angular/core';
 import { PokemonService } from '@services/pokemon.service';
+import { PokemonTeamSlotComponent } from './pokemon-team-slot/pokemon-team-slot.component';
 
 @Component({
   selector: 'app-pokemon-team',
-  standalone: true,
+  imports: [PokemonTeamSlotComponent],
   templateUrl: './pokemon-team.component.html',
 })
 export class PokemonTeamComponent {
   pokemonService = inject(PokemonService);
 
-  pokemonTeam = signal<(Pokemon | undefined)[]>(
-    this.pokemonService.getTeamFromLocalStorage() || [
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-    ]
-  );
+  pokemonTeam = linkedSignal(() => this.pokemonService.pokemonTeam());
 
-  teamActive = input();
-  pokemonToAdd = model<Pokemon>();
+  teamActive = model(false);
 
-  constructor() {
-    effect(() => {
-      const newPokemon = this.pokemonToAdd();
-      if (newPokemon) {
-        const currentTeam = this.pokemonTeam().slice();
-        const firstEmptyIndex = currentTeam.findIndex(
-          (slot) => slot === undefined
-        );
+  teamCount = output<number>();
 
-        if (firstEmptyIndex !== -1) {
-          currentTeam[firstEmptyIndex] = newPokemon;
-          this.pokemonTeam.set(currentTeam);
-          this.pokemonToAdd.update(() => undefined);
-          this.pokemonService.saveTeamToLocalStorage(currentTeam);
-        }
-      }
-    });
+  emmitCount = effect(() => {
+    this.teamCount.emit(
+      this.pokemonTeam().filter((slot) => slot !== undefined).length
+    );
+  });
+
+  removePokemon(index: number) {
+    this.pokemonService.removePokemonFromTeam(index);
+    this.teamCount.emit(
+      this.pokemonTeam().filter((slot) => slot !== undefined).length
+    );
   }
 }

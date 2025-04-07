@@ -1,15 +1,28 @@
-@if(isLoading()){
-
+@if (isLoading()) {
 <div class="flex grow w-full items-center justify-center">
   <app-loading-animation />
 </div>
-}@else {
-<section class="grid grid-cols-3 gap-3 h-full">
-  @for(mon of pokemon(); track mon.id){
-  <app-pokemon-card
-    [pokemon]="mon"
-    (sendPokemonToTeam)="sendPokemonToTeam.emit($event)"
-  />
+} @else if (errorMessage()) {
+<div class="flex grow w-full items-center justify-center">
+  <p class="text-red-500">{{ errorMessage() }}</p>
+</div>
+} @else if (isEmpty()) {
+<div class="flex grow w-full items-center justify-center">
+  <p class="text-gray-500">No Pokémon found.</p>
+</div>
+} @else {
+<section
+  class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 p-4"
+>
+  @for (mon of pokemon(); track mon.id) {
+  <app-pokemon-card [pokemon]="mon">
+    <button
+      class="btn btn-primary btn-sm sm:btn-md shadow-md hover:scale-105 transition-transform duration-200"
+      (click)="setPokemon.emit(mon)"
+    >
+      Añadir al equipo
+    </button>
+  </app-pokemon-card>
   }
 </section>
 }

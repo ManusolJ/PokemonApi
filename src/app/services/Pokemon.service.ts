@@ -27,7 +27,9 @@ import { PokemonCache } from '@interfaces/pokemonCache.interface';
 export class PokemonService {
   private http = inject(HttpClient);
   private pokemonCache = new Map<string, PokemonCache>();
-
+  pokemonTeam = signal<(Pokemon | undefined)[]>(
+    this.getTeamFromLocalStorage() || Array(6).fill(undefined)
+  );
   pokemonCount = signal<number>(0);
 
   getAllPokemon(limit: number = 18, offset: number = 0): Observable<Pokemon[]> {
@@ -129,6 +131,26 @@ export class PokemonService {
     return this.http
       .get<PokemonListREST>(environment.url)
       .pipe(map((pokemonREST) => pokemonREST.count));
+  }
+
+  addPokemonToTeam(pokemon: Pokemon) {
+    if (!pokemon) return;
+    const currentTeam = this.pokemonTeam().slice();
+    const firstEmptyIndex = currentTeam.findIndex((slot) => slot === undefined);
+    if (firstEmptyIndex !== -1) {
+      currentTeam[firstEmptyIndex] = pokemon;
+      this.pokemonTeam.set(currentTeam);
+      this.saveTeamToLocalStorage(currentTeam);
+    }
+  }
+
+  removePokemonFromTeam(index: number) {
+    if (index === undefined) return;
+    const currentTeam = this.pokemonTeam();
+    if (currentTeam[index] === undefined) return;
+    currentTeam[index] = undefined;
+    this.pokemonTeam.set(currentTeam);
+    this.saveTeamToLocalStorage(currentTeam);
   }
 
   saveTeamToLocalStorage(team: (Pokemon | undefined)[]): void {

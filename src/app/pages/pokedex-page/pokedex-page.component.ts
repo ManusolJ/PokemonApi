@@ -1,11 +1,4 @@
-import {
-  Component,
-  effect,
-  inject,
-  linkedSignal,
-  output,
-  signal,
-} from '@angular/core';
+import { Component, effect, inject, linkedSignal, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 
 import { PokemonService } from '@services/pokemon.service';
@@ -64,5 +57,7 @@ export class PokedexPageComponent {
     this.paginationReset.set(false);
   });
 
-  sendPokemonToTeam = output<Pokemon>();
+  addPokemonToTeam(pokemon: Pokemon) {
+    this.pokemonService.addPokemonToTeam(pokemon);
+  }
 }

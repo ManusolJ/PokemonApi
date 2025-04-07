@@ -2,7 +2,6 @@ import { Component, signal } from '@angular/core';
 import { NavbarComponent } from '@sharedComp/navbar/navbar.component';
 import { PokemonTeamComponent } from '@components/pokemon-team/pokemon-team.component';
 import { PokedexPageComponent } from '@pages/pokedex-page/pokedex-page.component';
-import { Pokemon } from '@interfaces/pokemon.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,9 +10,9 @@ import { Pokemon } from '@interfaces/pokemon.interface';
 })
 export class DashboardComponent {
   activeDropdown = signal(false);
-  pokemon = signal<Pokemon | undefined>(undefined);
+  pokemonTeamCount = signal<number>(0);
 
-  addPokemonToTeam(pokemon: Pokemon) {
-    this.pokemon.set(pokemon);
+  setPokemonTeam(pokemonNumberCount: number) {
+    this.pokemonTeamCount.set(pokemonNumberCount);
   }
 }

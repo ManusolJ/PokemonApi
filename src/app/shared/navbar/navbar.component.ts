@@ -1,4 +1,4 @@
-import { Component, output, signal } from '@angular/core';
+import { Component, input, output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -8,6 +8,8 @@ import { Component, output, signal } from '@angular/core';
 export class NavbarComponent {
   activateTeamDropdown = output<boolean>();
   isTeamDroppedDown = signal(false);
+  mobileMenuOpen = signal<boolean>(false);
+  pokemonTeamCount = input<number>();
 
   sendDropdownSignal() {
     if (this.isTeamDroppedDown()) {

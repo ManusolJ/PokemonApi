@@ -4,7 +4,7 @@ import { Pokemon } from '@interfaces/pokemon.interface';
 
 @Component({
   selector: 'app-pokemon-card',
-  imports: [TitleCasePipe, NgClass],
+  imports: [NgClass],
   templateUrl: './pokemon-card.component.html',
 })
 export class PokemonCardComponent {
